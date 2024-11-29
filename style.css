@@ -1,0 +1,237 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#parent-container{
+    width: 100%;
+    padding: 3%;
+    display: flex;
+    background-color: #F4F5F7;
+}
+
+#child1{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 2%;
+    /* background-color: #912929; */
+}
+
+#child2{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    padding: 2%;
+    background-color: #fff;
+}
+
+#create-component{
+    padding: 20px;
+    margin-bottom: 5%;
+    width: 100%;
+    background-color: #fff;
+    text-align: center;
+}
+
+.header-text{
+    
+    font-size: 25px;
+    font-weight: 700;
+    line-height:9.3px;
+}
+
+
+.btn{
+    outline: none;
+    border: none;
+    border-radius: 0;
+}
+
+#create-component-add-btn{
+    background-color: #59A52C;
+    font-weight: 900;
+}
+
+#create-component-delete-btn{
+    font-weight: 900;
+    background-color: #E31D1D;
+}
+
+#component-list{
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.rules{
+    display: flex;
+    padding-left: 5%;
+    text-align: left;
+}
+
+.rules p{
+    margin-left: 10px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.rules input[type="checkbox"] {
+    display: none;
+}
+
+.unactive-rule {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+}
+
+.active-rule {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+    background-color: #59A52C;
+    border-color: #59A52C;
+    box-shadow: 0px 0px 0px 5px #E6F2E0;
+}
+
+#rule-name-parent{
+    display: flex;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#rule-name-parent p{
+    margin-right: 2%;
+    margin-left: 2%;
+    
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 29.3px;
+    margin-top: 5px;
+}
+
+#rule-name-parent input{
+    width: 73%;
+    height: 40px;
+    outline-color: grey;
+    border-radius: 0;
+    padding: 10px;
+    border: grey solid 1px;
+    margin-right: 2%;
+}
+
+#rule-name-parent button{
+    height: 40px;
+    width: 7%;
+    background-color: #59A52C;
+    font-weight: 900;
+    border: none;
+}
+
+#rule-description-parent{
+    display: flex;
+    flex-direction: column;
+    background-color: #F4F5F7;
+    padding: 30px;
+    width: 100%;
+}
+
+#criteria-btns{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#criteria-btns p{
+    margin-right: 2%;
+    margin-left: 2%;
+    
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 35.16px;    
+}
+
+#criteria-add-btn{
+    background-color: #CAE2BC;
+    font-weight: 900;
+    color:#59A52C;
+    border-radius: 6px;
+}
+
+#criteria-collapse-btn{
+    background-color: #484848;
+    opacity: 0.4;
+    font-weight: 900;
+    color: #fff;
+    border-radius: 6px;
+    margin-left: 5px;
+}
+
+#rule-description-parent hr{
+    width: 100%;
+}
+
+.criteria-modal{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #C2C2C2;
+    padding: 30px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.criteria-number{
+    /* background-color: blue; */
+    font-size: 22px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.criteria-1-structure-1,
+.criteria-1-structure-2{
+    display: flex;
+    /* background-color: yellowgreen; */
+    width: 80%;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.criteria-1-structure-1 select{
+    width: 30%;
+}
+
+.criteria-2-structure-1,
+.criteria-2-structure-2{
+    display: flex;
+    /* -color: yellowgreen; */
+    width: 90%;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.criteria-2-structure-1 select{
+    width: 30%;
+}
+
+.active-p{
+    color: #59A52C;
+    font-weight: 500;
+}
+
