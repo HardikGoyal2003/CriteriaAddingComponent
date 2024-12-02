@@ -1,6 +1,6 @@
 import { components } from "./models.js"; 
 
-function createCriteriaModal(index) {
+function createCriteriaModal(index, arrayOfIPs=[]) {
     const criteriaModal = document.createElement('div');
     criteriaModal.className = 'criteria-modal';
 
@@ -77,21 +77,22 @@ function createCriteriaModal(index) {
     const criteriaStructure2 = document.createElement('div');
     criteriaStructure2.className = 'criteria-1-structure-2';
 
-    const select3 = document.createElement('select');
-    select3.className = 'form-select';
-    select3.setAttribute('aria-label', 'Default select example');
-    const option3 = document.createElement('option');
-    option3.selected = true;
-    option3.textContent = 'Select items';
-    select3.appendChild(option3);
-    for (let i = 1; i <= 3; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = `Option ${i}`;
-        select3.appendChild(option);
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'form-control';
+    input.placeholder = 'Enter value';
+    criteriaStructure2.appendChild(input);
+
+    const ip = document.createElement('div');
+    ip.className = 'ip';
+
+    for (let i = 0; i < arrayOfIPs.length; i++) {
+        const ipText = document.createElement('span');
+        ipText.textContent = arrayOfIPs[i];
+        ip.appendChild(ipText);
     }
 
-    criteriaStructure2.appendChild(select3);
+    criteriaStructure2.appendChild(ip);
 
     criteriaModal.appendChild(criteriaNumber);
     criteriaModal.appendChild(hr);
@@ -102,8 +103,7 @@ function createCriteriaModal(index) {
     parent.appendChild(criteriaModal);
 }
 
-
-function createCriteriaModal2(index) {
+function createCriteriaModal2(index, arrayOfIPs=[]) {
     const criteriaModal = document.createElement('div');
     criteriaModal.className = 'criteria-modal';
 
@@ -197,21 +197,23 @@ function createCriteriaModal2(index) {
     const criteriaStructure2 = document.createElement('div');
     criteriaStructure2.className = 'criteria-2-structure-2';
 
-    const select3 = document.createElement('select');
-    select3.className = 'form-select';
-    select3.setAttribute('aria-label', 'Default select example');
-    const option3 = document.createElement('option');
-    option3.selected = true;
-    option3.textContent = 'Select items';
-    select3.appendChild(option3);
-    for (let i = 1; i <= 3; i++) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = `Option ${i}`;
-        select3.appendChild(option);
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'form-control';
+    input.placeholder = 'Enter value';
+    criteriaStructure2.appendChild(input);
+
+    const ip = document.createElement('div');
+    ip.className = 'ip';
+
+    for (let i = 0; i < arrayOfIPs.length; i++) {
+        const ipText = document.createElement('span');
+        ipText.textContent = arrayOfIPs[i];
+        ip.appendChild(ipText);
     }
 
-    criteriaStructure2.appendChild(select3);
+    criteriaStructure2.appendChild(ip);
+
 
     criteriaModal.appendChild(criteriaNumber);
     criteriaModal.appendChild(hr);
@@ -220,6 +222,34 @@ function createCriteriaModal2(index) {
 
     const parent = document.getElementById('rule-description-parent');
     parent.appendChild(criteriaModal);
+}
+
+function addIP(event) {
+    
+    const criteriaModal = event.target.closest('.criteria-modal');
+    const input = criteriaModal.querySelector('input.form-control');
+    const value = input.value;
+    const ip = input.nextElementSibling;
+    const ipText = document.createElement('span');
+    ipText.textContent = value;
+    ip.appendChild(ipText);
+    
+    const criteriaNumber = criteriaModal.querySelector('.criteria-number').querySelector('p').textContent;
+    
+    const ruleNameParent = document.getElementById('rule-name-parent');
+    const ruleNameInput = ruleNameParent.querySelector('input');
+    const ruleName = ruleNameInput.value;
+    const indexofCriteria = Array.from(
+        event.target.parentElement.parentElement.parentElement.children
+    ).indexOf(
+        event.target.parentElement.parentElement
+    ) - 2;
+
+    const rule = components.find((rule) => rule.name === ruleName);
+
+    const key = Object.keys(components[0].criteria[indexofCriteria])[0];
+    rule.criteria[indexofCriteria][key].push(value);
+    input.value = '';
 }
 
 function loadRules(){
@@ -288,20 +318,7 @@ function saveNewRule(){
     individualActiveRuleComponent.appendChild(paragraph);
     const parent = document.getElementById('component-list');
     parent.appendChild(individualActiveRuleComponent);
-}
 
-
-function init(){
-    loadRules();
-    for (let j=0; j<components[0].criteria.length; j++) {
-        if (components[0].criteria[j] === 'criteria_1') {
-            createCriteriaModal(j);
-        } else {
-            createCriteriaModal2(j);
-        }
-    }
-
-    
 }
 
 function deleteCriteriaModal(event){
@@ -315,9 +332,20 @@ function deleteCriteriaModal(event){
 
     const ruleIndex = ruleNameInput.value;
     const rule = components.find((rule) => rule.name === ruleIndex);
+    
     const criteriaIndex = rule.criteria.findIndex((criteria) => criteria === event.target.id);
     rule.criteria.splice(criteriaIndex, 1);
+}
 
+function init(){
+    loadRules();
+    for (let j=0; j<components[0].criteria.length; j++) {
+        if (Object.keys(components[0].criteria[j])[0] === 'criteria_1') {
+            createCriteriaModal(j, components[0].criteria[j]['criteria_1']);
+        } else {
+            createCriteriaModal2(j, components[0].criteria[j]['criteria_2']);
+        }
+    }
 }
 
 init();
@@ -337,13 +365,14 @@ addEventListener('click', function(event) {
 addEventListener('click', function(event) {
     if (event.target.tagName === 'P' && event.target.parentElement.classList.contains('rules')) {
         const ruleIndex = event.target.parentElement.id.split('rules')[1];
-        const criteriaModal = document.getElementById('rule-description-parent');
-        criteriaModal.innerHTML = '';
+        const criteriaModalParent = document.getElementById('rule-description-parent');
+        const criteriaModals = criteriaModalParent.querySelectorAll('.criteria-modal');
+        criteriaModals.forEach(modal => modal.remove());
         for (let j=0; j<components[ruleIndex].criteria.length; j++) {
-            if (components[ruleIndex].criteria[j] === 'criteria_1') {
-                createCriteriaModal(j);
+            if (Object.keys(components[0].criteria[j])[0] === 'criteria_1') {
+                createCriteriaModal(j, components[0].criteria[j]['criteria_1']);
             } else {
-                createCriteriaModal2(j);
+                createCriteriaModal2(j, components[0].criteria[j]['criteria_2']);
             }
         }
 
@@ -362,4 +391,42 @@ document.getElementById('rule-description-parent').addEventListener('click', fun
     }
 });
 
-document.getElementById('criteria-collapse-btn').addEventListener('click', collapseCriteriaModal);
+document.getElementById('add-criteria-1').addEventListener('click', function() {
+    const criteriaModalParent = document.getElementsByClassName('criteria-modal');
+    const criteriaModalLength = criteriaModalParent.length;
+    createCriteriaModal(criteriaModalLength);
+
+
+    const ruleNameParent = document.getElementById('rule-name-parent');
+    const ruleNameInput = ruleNameParent.querySelector('input');
+    const ruleName = ruleNameInput.value;
+    const rule = components.find((rule) => rule.name === ruleName);
+    if (rule) {
+        const key = `criteria_${criteriaModalLength}`;
+        rule.criteria.push({[key]: []});
+    }
+})
+    
+document.getElementById('add-criteria-2').addEventListener('click', function() {
+    const criteriaModalParent = document.getElementsByClassName('criteria-modal');
+    const criteriaModalLength = criteriaModalParent.length;
+    createCriteriaModal2(criteriaModalLength)
+
+
+    const ruleNameParent = document.getElementById('rule-name-parent');
+    const ruleNameInput = ruleNameParent.querySelector('input');
+    const ruleName = ruleNameInput.value;
+    const rule = components.find((rule) => rule.name === ruleName);
+    if (rule) {
+        const key = `criteria_${criteriaModalLength}`;
+        rule.criteria.push({[key]: []});
+    }
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && event.target.tagName === 'INPUT' && event.target.value.trim() !== '') {
+        addIP(event);
+    }
+});
+
+
