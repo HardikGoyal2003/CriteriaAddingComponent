@@ -60,25 +60,53 @@ CriteriaAddingComponent/
 
 ```javascript
 const CACHING_ACTIVE_RULE = {
-    name: 'caching',
-    active: true,
-};
+    name: 'Caching',
+    active: false,
+    criteria: [
+        {'criteria_1':[        
+            '192.45.1.1',
+            '192.62.1.1',
+            '192.60.1.1',
+            '192.61.1.1'
+        ]},
+        {'criteria_2':[
+            '192.45.1.1',
+        ]},
+        {'criteria_2':[]},
+        {'criteria_1':[
+            '192.60.1.1',
+            '192.61.1.1'
+        ]}
+    ],
+}
 
 const HTML_ACTIVE_RULE = {
-    name: 'html',
+    name: 'HTML',
     active: false,
-};
+    criteria: [
+        {'criteria_1': [
+            '192.45.1.1',
+            '192.62.1.1',
+            '192.60.1.1',
+            '192.61.1.1'
+        ]},
+        {'criteria_1': []}
+    ],
+}
 
 const CSS_ACTIVE_RULE = {
-    name: 'css',
+    name: 'CSS',
     active: false,
-};
+    criteria: [
+        {'criteria_2': []}
+    ],
+}
 
 let components = [
     CACHING_ACTIVE_RULE,
     HTML_ACTIVE_RULE,
     CSS_ACTIVE_RULE,
-];
+]
 ```
 
 ## Technologies Used
