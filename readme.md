@@ -2,6 +2,9 @@
 
 This project provides a dynamic interface for adding, managing, and displaying criteria or rules. Built with modern web technologies, it aims to simplify the management of active rules and their properties.
 
+![image](https://github.com/user-attachments/assets/eebb5dc9-84f9-4b39-9c18-9646395322e0)
+
+
 ## Features
 
 - **Add and Delete Criteria**: Easily add or remove criteria with intuitive buttons.
